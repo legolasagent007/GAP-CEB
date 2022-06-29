@@ -12,4 +12,8 @@
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\fork-main.png" />
+    <Content Include="img\fork-second-page.png" />
+  </ItemGroup>
 </Project>
