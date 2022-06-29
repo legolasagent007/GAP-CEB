@@ -2,7 +2,7 @@
 
 # Template des applications internes de l'OTR
 
-[![pipeline status](https://gitlab.otr.lan/templates/net-template/master/badges/master/pipeline.svg)](https://gitlab.otr.lan/templates/net-template/master/-/commits/master)
+[![pipeline status](https://gitlab.otr.lan/templates/net-template/badges/master/pipeline.svg)](https://gitlab.otr.lan/templates/net-template/-/commits/master)
 
 ## Introduction
 
