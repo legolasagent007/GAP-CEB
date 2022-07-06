@@ -1,0 +1,13 @@
+# Image de documentation
+img/ @koffisani
+
+# Git config files
+.gitignore @koffisani
+
+# CI/CD job config files
+.gitlab-ci.yml @koffisani
+
+# Source code
+src/ @pwoagou @aanyilunda
+
+
