@@ -4,12 +4,12 @@
 <UserCard />
 <MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.Home">@_localizer["Home"]</MudNavLink>
-  
-    
+
+
     @*<MudListSubheader Class="mt-2 mb-n2">@_localizer["Personal"]</MudListSubheader>*@
     @if (_canViewDashboards)
     {
-       
+
         <MudNavLink Href="/dashboard" Icon="@Icons.Material.Outlined.Dashboard">
             @_localizer["Dashboard"]
         </MudNavLink>
@@ -22,83 +22,70 @@
     }
     @*<MudNavLink Href="/account" Icon="@Icons.Material.Outlined.SupervisorAccount">
         @_localizer["Account"]
-    </MudNavLink>*@
-    
-    @if (_canViewDocuments || _canViewDocumentTypes)
-    {
-        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Document Management"]</MudListSubheader>
-        @if (_canViewDocuments)
-        {
-            <MudNavLink Href="/mydocument-store" Icon="@Icons.Material.Outlined.AttachFile">
-                @_localizer["My Document Store"]
-            </MudNavLink>
-        }
-        @if (_canViewDocumentTypes)
-        { 
-            <MudNavLink Href="/document-store" Icon="@Icons.Material.Outlined.AttachFile">
-                @_localizer["Document Store"]
-            </MudNavLink>
-            <MudNavLink Href="/document-types" Icon="@Icons.Material.Outlined.FileCopy">
-                @_localizer["Document Types"]
-            </MudNavLink>
-        }
-    }
+        </MudNavLink>*@
 
-     <MudListSubheader Class="mt-2 mb-n2">Création de titre foncier</MudListSubheader>
-       
-            <MudNavLink Href="#" Icon="@Icons.Material.Filled.Assignment">
-                Immatriculation
-            </MudNavLink>
-         
-            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.VerticalSplit">
-                Morcellement / Démembrement
-            </MudNavLink>
-            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.MergeType">
-                Fusion
-            </MudNavLink>
 
-      <MudListSubheader Class="mt-2 mb-n2">Mise-à-jour de titre foncier (TF)</MudListSubheader>
-       
-            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.LooksTwo">
-                Duplicata
-            </MudNavLink>
-         
-            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Refresh">
-                Actualisation de TF
-            </MudNavLink>
-            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.RestoreFromTrash">
-                Rectification de TF
-            </MudNavLink>
-            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.DevicesOther">
-                Autres opérations post-immatriculation
-            </MudNavLink>
+    <MudNavGroup Title="Création de titre foncier" @bind-Expanded=_isTFExpanded Icon="@Icons.Outlined.CreateNewFolder" Color="Color.Error">
 
-      <MudListSubheader Class="mt-2 mb-n2">Opérations diverses</MudListSubheader>
-       
-            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Explore">
-                Expertises foncières
-            </MudNavLink>
-         
-            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.CardGiftcard">
-                Plan cadastral
-            </MudNavLink>
-            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Info">
-                Renseignements
-            </MudNavLink>
-            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Anchor">
-                Opposition
-            </MudNavLink>
-            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Analytics">
-                Evaluation cadastrale
-            </MudNavLink>
-            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.RuleFolder">
-                Récapitulatifs de dossiers
-            </MudNavLink>
-        
+
+        <MudNavLink Href="#" Icon="@Icons.Material.Filled.Assignment">
+            Immatriculation
+        </MudNavLink>
+
+        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.VerticalSplit">
+            Morcellement / Démembrement
+        </MudNavLink>
+        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.MergeType">
+            Fusion
+        </MudNavLink>
+    </MudNavGroup>
+
+    <MudNavGroup Title="Mise-à-jour de titre foncier" @bind-Expanded=_isMajExpanded Icon="@Icons.Outlined.Update" Color="Color.Error">
+
+        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.LooksTwo">
+            Duplicata
+        </MudNavLink>
+
+        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Refresh">
+            Actualisation
+        </MudNavLink>
+        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.RestoreFromTrash">
+            Rectification
+        </MudNavLink>
+        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.DevicesOther">
+            Autres opérations post-immatriculation
+        </MudNavLink>
+    </MudNavGroup>
+
+
+    <MudNavGroup Title="Opérations diverses" @bind-Expanded=_isOtherExpanded Icon="@Icons.Outlined.DevicesOther" Color="Color.Error">
+
+        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Explore">
+            Expertises foncières
+        </MudNavLink>
+
+        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.CardGiftcard">
+            Plan cadastral
+        </MudNavLink>
+        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Info">
+            Renseignements
+        </MudNavLink>
+        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Anchor">
+            Opposition
+        </MudNavLink>
+        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Analytics">
+            Evaluation cadastrale
+        </MudNavLink>
+        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.RuleFolder">
+            Récapitulatifs de dossiers
+        </MudNavLink>
+    </MudNavGroup>
 
     @if (_canViewUsers || _canViewRoles)
     {
-        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Administrator"]</MudListSubheader>
+        
+     <MudNavGroup Title=@_localizer["Administrator"] @bind-Expanded=_isAdminExpanded Icon="@Icons.Outlined.VerifiedUser" Color="Color.Error">
+
         @if (_canViewUsers)
         {
             <MudNavLink Href="/identity/users" Icon="@Icons.Material.Outlined.Person">
@@ -106,27 +93,50 @@
             </MudNavLink>
         }
         <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
-        @_localizer["Swagger"]
+            @_localizer["Swagger"]
         </MudNavLink>
         @if (_canViewRoles)
         {
             <MudNavLink Href="/identity/roles" Icon="@Icons.Material.Outlined.Person">@_localizer["Roles"]</MudNavLink>
         }
         @if (_canViewAuditTrails)
-    {
-        <MudNavLink Href="/audit-trails" Icon="@Icons.Material.Outlined.Security">
-            @_localizer["Audit Trails"]
-        </MudNavLink>
+        {
+            <MudNavLink Href="/audit-trails" Icon="@Icons.Material.Outlined.Security">
+                @_localizer["Audit Trails"]
+            </MudNavLink>
+        }
+        </MudNavGroup>
     }
+    
+    @if (_canViewDocuments || _canViewDocumentTypes)
+    {
+
+        <MudNavGroup Title=@_localizer["Document Management"] @bind-Expanded=_isDocExpanded Icon="@Icons.Outlined.FolderSpecial" Color="Color.Error">
+
+        @if (_canViewDocuments)
+        {
+            <MudNavLink Href="/mydocument-store" Icon="@Icons.Material.Outlined.AttachFile">
+                @_localizer["My Document Store"]
+            </MudNavLink>
+        }
+        @if (_canViewDocumentTypes)
+        {
+            <MudNavLink Href="/document-store" Icon="@Icons.Material.Outlined.FolderOpen">
+                @_localizer["Document Store"]
+            </MudNavLink>
+            <MudNavLink Href="/document-types" Icon="@Icons.Material.Outlined.FolderShared">
+                @_localizer["Document Types"]
+            </MudNavLink>
+        }
+        </MudNavGroup>
     }
     @if (_canViewChat)
     {
-        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Communication"]</MudListSubheader>
+         
         <MudNavLink Href="/chat" Icon="@Icons.Material.Outlined.Chat">
             @_localizer["Chat"]
         </MudNavLink>
     }
-   
 </MudNavMenu>
 
 @code {
@@ -154,5 +164,14 @@
         _canViewRoles = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Roles.View)).Succeeded;
         _canViewUsers = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Users.View)).Succeeded;
         _canViewChat = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Communication.Chat)).Succeeded;
-         }
+    }
+}
+
+@code {
+    bool _isTFExpanded = false;
+    bool _isMajExpanded = false;
+    bool _isOtherExpanded = false;
+    bool _isAdminExpanded = false;
+    bool _isParamExpanded = false;
+    bool _isDocExpanded = false;
 }
