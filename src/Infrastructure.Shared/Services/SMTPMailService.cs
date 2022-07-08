@@ -27,7 +27,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Shared.Services
             {
                 var email = new MimeMessage
                 {
-                    Sender = new MailboxAddress(_config.DisplayName, request.From ?? _config.From),
+                    Sender = new MailboxAddress(_config.DisplayName, _config.From),
                     Subject = request.Subject,
                     Body = new BodyBuilder
                     {
