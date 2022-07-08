@@ -4,50 +4,97 @@
 <UserCard />
 <MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.Home">@_localizer["Home"]</MudNavLink>
-    @if (_canViewHangfire)
-    {
-        <MudNavLink Href="/jobs" Target="_blank" Icon="@Icons.Material.Outlined.Work">
-            @_localizer["Hangfire"]
-        </MudNavLink>
-    }
-    <MudNavLink Href="https://codewithmukesh.com/blog/blazor-hero-quick-start-guide/" Target="_blank" Icon="@Icons.Material.Outlined.ReadMore">
-        @_localizer["Quick Start Guide"]
-    </MudNavLink>
-    <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
-        @_localizer["Swagger"]
-    </MudNavLink>
-    <MudListSubheader Class="mt-2 mb-n2">@_localizer["Personal"]</MudListSubheader>
+  
+    
+    @*<MudListSubheader Class="mt-2 mb-n2">@_localizer["Personal"]</MudListSubheader>*@
     @if (_canViewDashboards)
     {
+       
         <MudNavLink Href="/dashboard" Icon="@Icons.Material.Outlined.Dashboard">
             @_localizer["Dashboard"]
         </MudNavLink>
-    }
-    <MudNavLink Href="/account" Icon="@Icons.Material.Outlined.SupervisorAccount">
-        @_localizer["Account"]
-    </MudNavLink>
-    @if (_canViewAuditTrails)
-    {
-        <MudNavLink Href="/audit-trails" Icon="@Icons.Material.Outlined.Security">
-            @_localizer["Audit Trails"]
+        <MudNavLink Href="/dashboard" Icon="@Icons.Material.Outlined.Folder">
+            @_localizer["Dépôt"]
+        </MudNavLink>
+        <MudNavLink Href="/dashboard" Icon="@Icons.Material.Outlined.Map">
+            @_localizer["Plan parcellaire"]
         </MudNavLink>
     }
+    @*<MudNavLink Href="/account" Icon="@Icons.Material.Outlined.SupervisorAccount">
+        @_localizer["Account"]
+    </MudNavLink>*@
+    
     @if (_canViewDocuments || _canViewDocumentTypes)
     {
         <MudListSubheader Class="mt-2 mb-n2">@_localizer["Document Management"]</MudListSubheader>
         @if (_canViewDocuments)
         {
-            <MudNavLink Href="/document-store" Icon="@Icons.Material.Outlined.AttachFile">
-                @_localizer["Document Store"]
+            <MudNavLink Href="/mydocument-store" Icon="@Icons.Material.Outlined.AttachFile">
+                @_localizer["My Document Store"]
             </MudNavLink>
         }
         @if (_canViewDocumentTypes)
-        {
+        { 
+            <MudNavLink Href="/document-store" Icon="@Icons.Material.Outlined.AttachFile">
+                @_localizer["Document Store"]
+            </MudNavLink>
             <MudNavLink Href="/document-types" Icon="@Icons.Material.Outlined.FileCopy">
                 @_localizer["Document Types"]
             </MudNavLink>
         }
     }
+
+     <MudListSubheader Class="mt-2 mb-n2">Création de titre foncier</MudListSubheader>
+       
+            <MudNavLink Href="#" Icon="@Icons.Material.Filled.Assignment">
+                Immatriculation
+            </MudNavLink>
+         
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.VerticalSplit">
+                Morcellement / Démembrement
+            </MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.MergeType">
+                Fusion
+            </MudNavLink>
+
+      <MudListSubheader Class="mt-2 mb-n2">Mise-à-jour de titre foncier (TF)</MudListSubheader>
+       
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.LooksTwo">
+                Duplicata
+            </MudNavLink>
+         
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Refresh">
+                Actualisation de TF
+            </MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.RestoreFromTrash">
+                Rectification de TF
+            </MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.DevicesOther">
+                Autres opérations post-immatriculation
+            </MudNavLink>
+
+      <MudListSubheader Class="mt-2 mb-n2">Opérations diverses</MudListSubheader>
+       
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Explore">
+                Expertises foncières
+            </MudNavLink>
+         
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.CardGiftcard">
+                Plan cadastral
+            </MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Info">
+                Renseignements
+            </MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Anchor">
+                Opposition
+            </MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Analytics">
+                Evaluation cadastrale
+            </MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.RuleFolder">
+                Récapitulatifs de dossiers
+            </MudNavLink>
+        
 
     @if (_canViewUsers || _canViewRoles)
     {
@@ -58,10 +105,19 @@
                 @_localizer["Users"]
             </MudNavLink>
         }
+        <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
+        @_localizer["Swagger"]
+        </MudNavLink>
         @if (_canViewRoles)
         {
             <MudNavLink Href="/identity/roles" Icon="@Icons.Material.Outlined.Person">@_localizer["Roles"]</MudNavLink>
         }
+        @if (_canViewAuditTrails)
+    {
+        <MudNavLink Href="/audit-trails" Icon="@Icons.Material.Outlined.Security">
+            @_localizer["Audit Trails"]
+        </MudNavLink>
+    }
     }
     @if (_canViewChat)
     {
@@ -70,22 +126,7 @@
             @_localizer["Chat"]
         </MudNavLink>
     }
-    @if (_canViewProducts || _canViewBrands)
-    {
-        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Catalog Management"]</MudListSubheader>
-        @if (_canViewProducts)
-        {
-            <MudNavLink Href="/catalog/products" Icon="@Icons.Material.Outlined.CallToAction">
-                @_localizer["Products"]
-            </MudNavLink>
-        }
-        @if (_canViewBrands)
-        {
-            <MudNavLink Href="/catalog/brands" Icon="@Icons.Material.Outlined.CallToAction">
-                @_localizer["Brands"]
-            </MudNavLink>
-        }
-    }
+   
 </MudNavMenu>
 
 @code {
@@ -113,7 +154,5 @@
         _canViewRoles = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Roles.View)).Succeeded;
         _canViewUsers = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Users.View)).Succeeded;
         _canViewChat = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Communication.Chat)).Succeeded;
-        _canViewProducts = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Products.View)).Succeeded;
-        _canViewBrands = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Brands.View)).Succeeded;
-    }
+         }
 }
