@@ -58,7 +58,7 @@
     </MudNavGroup>
 
 
-    <MudNavGroup Title="Opérations diverses" Expanded=@isExpended(2) ExpandedChanged=@(()=>hasChanged(2))  Icon="@Icons.Outlined.DevicesOther" Color="Color.Error">
+    <MudNavGroup Title="Opérations diverses" Expanded=@isExpended(2) ExpandedChanged=@(()=>hasChanged(2)) Icon="@Icons.Outlined.DevicesOther" Color="Color.Error">
 
         <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Explore">
             Expertises foncières
@@ -83,56 +83,56 @@
 
     @if (_canViewUsers || _canViewRoles)
     {
-        
-     <MudNavGroup Title=@_localizer["Administrator"] Expanded=@isExpended(3) ExpandedChanged=@(()=>hasChanged(3))  Icon="@Icons.Outlined.VerifiedUser" Color="Color.Error">
 
-        @if (_canViewUsers)
-        {
-            <MudNavLink Href="/identity/users" Icon="@Icons.Material.Outlined.Person">
-                @_localizer["Users"]
+        <MudNavGroup Title=@_localizer["Administrator"] Expanded=@isExpended(3) ExpandedChanged=@(()=>hasChanged(3)) Icon="@Icons.Outlined.VerifiedUser" Color="Color.Error">
+
+            @if (_canViewUsers)
+            {
+                <MudNavLink Href="/identity/users" Icon="@Icons.Material.Outlined.Person">
+                    @_localizer["Users"]
+                </MudNavLink>
+            }
+            <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
+                @_localizer["Swagger"]
             </MudNavLink>
-        }
-        <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
-            @_localizer["Swagger"]
-        </MudNavLink>
-        @if (_canViewRoles)
-        {
-            <MudNavLink Href="/identity/roles" Icon="@Icons.Material.Outlined.Person">@_localizer["Roles"]</MudNavLink>
-        }
-        @if (_canViewAuditTrails)
-        {
-            <MudNavLink Href="/audit-trails" Icon="@Icons.Material.Outlined.Security">
-                @_localizer["Audit Trails"]
-            </MudNavLink>
-        }
+            @if (_canViewRoles)
+            {
+                <MudNavLink Href="/identity/roles" Icon="@Icons.Material.Outlined.Person">@_localizer["Roles"]</MudNavLink>
+            }
+            @if (_canViewAuditTrails)
+            {
+                <MudNavLink Href="/audit-trails" Icon="@Icons.Material.Outlined.Security">
+                    @_localizer["Audit Trails"]
+                </MudNavLink>
+            }
         </MudNavGroup>
     }
-    
+
     @if (_canViewDocuments || _canViewDocumentTypes)
     {
 
-        <MudNavGroup Title=@_localizer["Document Management"] Expanded=@isExpended(4) ExpandedChanged=@(()=>hasChanged(4))  Icon="@Icons.Outlined.FolderSpecial" Color="Color.Error">
+        <MudNavGroup Title=@_localizer["Document Management"] Expanded=@isExpended(4) ExpandedChanged=@(()=>hasChanged(4)) Icon="@Icons.Outlined.FolderSpecial" Color="Color.Error">
 
-        @if (_canViewDocuments)
-        {
-            <MudNavLink Href="/mydocument-store" Icon="@Icons.Material.Outlined.AttachFile">
-                @_localizer["My Document Store"]
-            </MudNavLink>
-        }
-        @if (_canViewDocumentTypes)
-        {
-            <MudNavLink Href="/document-store" Icon="@Icons.Material.Outlined.FolderOpen">
-                @_localizer["Document Store"]
-            </MudNavLink>
-            <MudNavLink Href="/document-types" Icon="@Icons.Material.Outlined.FolderShared">
-                @_localizer["Document Types"]
-            </MudNavLink>
-        }
+            @if (_canViewDocuments)
+            {
+                <MudNavLink Href="/mydocument-store" Icon="@Icons.Material.Outlined.AttachFile">
+                    @_localizer["My Document Store"]
+                </MudNavLink>
+            }
+            @if (_canViewDocumentTypes)
+            {
+                <MudNavLink Href="/document-store" Icon="@Icons.Material.Outlined.FolderOpen">
+                    @_localizer["Document Store"]
+                </MudNavLink>
+                <MudNavLink Href="/document-types" Icon="@Icons.Material.Outlined.FolderShared">
+                    @_localizer["Document Types"]
+                </MudNavLink>
+            }
         </MudNavGroup>
     }
     @if (_canViewChat)
     {
-         
+
         <MudNavLink Href="/chat" Icon="@Icons.Material.Outlined.Chat">
             @_localizer["Chat"]
         </MudNavLink>
@@ -140,8 +140,8 @@
 </MudNavMenu>
 
 @code {
-    private ClaimsPrincipal _authenticationStateProviderUser;
 
+    private ClaimsPrincipal _authenticationStateProviderUser;
     private bool _canViewHangfire;
     private bool _canViewDashboards;
     private bool _canViewDocuments;
@@ -152,10 +152,12 @@
     private bool _canViewChat;
     private bool _canViewProducts;
     private bool _canViewBrands;
-
-    protected override async Task OnParametersSetAsync()
+    private int toShow = -1;
+    private int isAnt = -1;
+    private int count = -1;
+    protected override async Task OnParametersSetAsync ()
     {
-        _Expended = new List<bool> { false, false, false,false,false,false };
+        toShow = -1;
 
         _authenticationStateProviderUser = await _stateProvider.GetAuthenticationStateProviderUserAsync();
         _canViewHangfire = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Hangfire.View)).Succeeded;
@@ -167,23 +169,19 @@
         _canViewUsers = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Users.View)).Succeeded;
         _canViewChat = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Communication.Chat)).Succeeded;
     }
-    private List<bool> _Expended = new List<bool>();
-    protected bool isExpended(int i)
+
+    protected bool isExpended (int i)
     {
-        return _Expended[i];
-    } 
-    private void hasChanged(int i)
-    {      
-
-        for(int k=0; k<_Expended.Count; k++)
-        {            
-            if (k != i)
-            {
-                _Expended[k] = false;
-            }
-
-        }
-        _Expended[i] = !_Expended[i];
-        StateHasChanged();
+        return i == toShow && (toShow!=isAnt) && count%2==1;
+    }
+    private void hasChanged (int i)
+    {
+        if (isAnt == toShow)
+            count++;
+        else
+            count = 0;
+        isAnt = toShow;
+        toShow = i;
+        
     }
   }
