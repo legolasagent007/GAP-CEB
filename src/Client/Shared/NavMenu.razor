@@ -25,8 +25,7 @@
         </MudNavLink>*@
 
 
-    <MudNavGroup Title="Création de titre foncier" Expanded=@isExpended(0) ExpandedChanged=@(()=>hasChanged(0)) Icon="@Icons.Outlined.CreateNewFolder" Color="Color.Error">
-
+    <MudNavGroup Title="Création de titre foncier" @bind-Expanded="listeMenu[0]" onclick="@(()=>changeExpend(0))" Icon="@Icons.Outlined.CreateNewFolder" Color="Color.Error">
 
         <MudNavLink Href="#" Icon="@Icons.Material.Filled.Assignment">
             Immatriculation
@@ -40,7 +39,7 @@
         </MudNavLink>
     </MudNavGroup>
 
-    <MudNavGroup Title="Mise-à-jour de titre foncier" Expanded=@isExpended(1) ExpandedChanged=@(()=>hasChanged(1)) Icon="@Icons.Outlined.Update" Color="Color.Error">
+    <MudNavGroup Title="Mise-à-jour de titre foncier" @bind-Expanded="listeMenu[1]" onclick="@(()=>changeExpend(1))" Icon="@Icons.Outlined.Update" Color="Color.Error">
 
         <MudNavLink Href="#" Icon="@Icons.Material.Outlined.LooksTwo">
             Duplicata
@@ -58,7 +57,7 @@
     </MudNavGroup>
 
 
-    <MudNavGroup Title="Opérations diverses" Expanded=@isExpended(2) ExpandedChanged=@(()=>hasChanged(2)) Icon="@Icons.Outlined.DevicesOther" Color="Color.Error">
+    <MudNavGroup Title="Opérations diverses" @bind-Expanded="listeMenu[2]" onclick="@(()=>changeExpend(2))" Icon="@Icons.Outlined.DevicesOther" Color="Color.Error">
 
         <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Explore">
             Expertises foncières
@@ -81,10 +80,18 @@
         </MudNavLink>
     </MudNavGroup>
 
+    <MudNavGroup Title="Paramétrage" @bind-Expanded="listeMenu[3]" onclick="@(()=>changeExpend(3))" Icon="@Icons.Outlined.Settings" Color="Color.Error">
+
+        <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
+            @_localizer["Swagger"]
+        </MudNavLink>
+       
+    </MudNavGroup>
+
     @if (_canViewUsers || _canViewRoles)
     {
 
-        <MudNavGroup Title=@_localizer["Administrator"] Expanded=@isExpended(3) ExpandedChanged=@(()=>hasChanged(3)) Icon="@Icons.Outlined.VerifiedUser" Color="Color.Error">
+        <MudNavGroup Title=@_localizer["Administrator"] @bind-Expanded="listeMenu[4]" onclick="@(()=>changeExpend(4))" Icon="@Icons.Outlined.VerifiedUser" Color="Color.Error">
 
             @if (_canViewUsers)
             {
@@ -111,7 +118,7 @@
     @if (_canViewDocuments || _canViewDocumentTypes)
     {
 
-        <MudNavGroup Title=@_localizer["Document Management"] Expanded=@isExpended(4) ExpandedChanged=@(()=>hasChanged(4)) Icon="@Icons.Outlined.FolderSpecial" Color="Color.Error">
+        <MudNavGroup Title=@_localizer["Document Management"] @bind-Expanded="listeMenu[5]" onclick="@(()=>changeExpend(5))" Icon="@Icons.Outlined.FolderSpecial" Color="Color.Error">
 
             @if (_canViewDocuments)
             {
@@ -132,7 +139,6 @@
     }
     @if (_canViewChat)
     {
-
         <MudNavLink Href="/chat" Icon="@Icons.Material.Outlined.Chat">
             @_localizer["Chat"]
         </MudNavLink>
@@ -140,8 +146,8 @@
 </MudNavMenu>
 
 @code {
-
     private ClaimsPrincipal _authenticationStateProviderUser;
+
     private bool _canViewHangfire;
     private bool _canViewDashboards;
     private bool _canViewDocuments;
@@ -152,13 +158,18 @@
     private bool _canViewChat;
     private bool _canViewProducts;
     private bool _canViewBrands;
-    private int toShow = -1;
-    private int isAnt = -1;
-    private int count = -1;
-    protected override async Task OnParametersSetAsync ()
-    {
-        toShow = -1;
 
+    bool _isTFExpanded = false;
+    bool _isMajExpanded = false;
+    bool _isOtherExpanded = false;
+    bool _isAdminExpanded = false;
+    bool _isParamExpanded = false;
+    bool _isDocExpanded = false;
+
+    List<bool> listeMenu = new List<bool>{false,false,false,false,false,false};
+
+    protected override async Task OnParametersSetAsync()
+    {
         _authenticationStateProviderUser = await _stateProvider.GetAuthenticationStateProviderUserAsync();
         _canViewHangfire = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Hangfire.View)).Succeeded;
         _canViewDashboards = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Dashboards.View)).Succeeded;
@@ -168,20 +179,18 @@
         _canViewRoles = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Roles.View)).Succeeded;
         _canViewUsers = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Users.View)).Succeeded;
         _canViewChat = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Communication.Chat)).Succeeded;
+    }   
+    
+    private void changeExpend(int i)
+    {
+        for(int k=0; k < listeMenu.Count; k++)
+        {
+            if(k!=i && listeMenu[k] == true)
+            {
+                listeMenu[k] = false;
+            }
+        }
+       
     }
 
-    protected bool isExpended (int i)
-    {
-        return i == toShow && (toShow!=isAnt) && count%2==1;
-    }
-    private void hasChanged (int i)
-    {
-        if (isAnt == toShow)
-            count++;
-        else
-            count = 0;
-        isAnt = toShow;
-        toShow = i;
-        
-    }
-  }
+}
