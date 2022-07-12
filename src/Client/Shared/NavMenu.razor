@@ -20,10 +20,7 @@
             @_localizer["Plan parcellaire"]
         </MudNavLink>
     }
-    @*<MudNavLink Href="/account" Icon="@Icons.Material.Outlined.SupervisorAccount">
-        @_localizer["Account"]
-        </MudNavLink>*@
-
+    
 
     <MudNavGroup Title="Création de titre foncier" @bind-Expanded="listeMenu[0]" onclick="@(()=>changeExpend(0))" Icon="@Icons.Outlined.CreateNewFolder" Color="Color.Error">
 
@@ -78,14 +75,6 @@
         <MudNavLink Href="#" Icon="@Icons.Material.Outlined.RuleFolder">
             Récapitulatifs de dossiers
         </MudNavLink>
-    </MudNavGroup>
-
-    <MudNavGroup Title="Paramétrage" @bind-Expanded="listeMenu[3]" onclick="@(()=>changeExpend(3))" Icon="@Icons.Outlined.Settings" Color="Color.Error">
-
-        <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
-            @_localizer["Swagger"]
-        </MudNavLink>
-       
     </MudNavGroup>
 
     <MudNavGroup Title="Paramétrage" @bind-Expanded="listeMenu[3]" onclick="@(()=>changeExpend(3))" Icon="@Icons.Outlined.Settings" Color="Color.Error">
