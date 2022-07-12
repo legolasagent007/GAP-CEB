@@ -88,6 +88,14 @@
        
     </MudNavGroup>
 
+    <MudNavGroup Title="Paramétrage" @bind-Expanded="listeMenu[3]" onclick="@(()=>changeExpend(3))" Icon="@Icons.Outlined.Settings" Color="Color.Error">
+
+        <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
+            @_localizer["Swagger"]
+        </MudNavLink>
+       
+    </MudNavGroup>
+
     @if (_canViewUsers || _canViewRoles)
     {
 
@@ -166,8 +174,7 @@
     bool _isParamExpanded = false;
     bool _isDocExpanded = false;
 
-    uint nMenu = 6;
-    List<bool> listeMenu = new List<bool>();
+    List<bool> listeMenu = new List<bool>{false,false,false,false,false,false};
 
     protected override async Task OnParametersSetAsync()
     {
@@ -180,30 +187,18 @@
         _canViewRoles = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Roles.View)).Succeeded;
         _canViewUsers = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Users.View)).Succeeded;
         _canViewChat = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Communication.Chat)).Succeeded;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        init();
-
-
-    }
-    private void init()
-    {
-        for (int i = 0; i < nMenu; i++)
-        {
-            listeMenu.Insert(i, false);
-        }
-    }
+    }   
+    
     private void changeExpend(int i)
     {
-        init();
-        if (i < nMenu)
+        for(int k=0; k < listeMenu.Count; k++)
         {
-            listeMenu[i] = !listeMenu[i];           
+            if(k!=i && listeMenu[k] == true)
+            {
+                listeMenu[k] = false;
+            }
         }
-        StateHasChanged();
-        //return listeMenu[i];
+       
     }
 
 }
