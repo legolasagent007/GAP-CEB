@@ -25,8 +25,7 @@
         </MudNavLink>*@
 
 
-    <MudNavGroup Title="Création de titre foncier" @bind-Expanded=_isTFExpanded Icon="@Icons.Outlined.CreateNewFolder" Color="Color.Error">
-
+    <MudNavGroup Title="Création de titre foncier" @bind-Expanded="listeMenu[0]" onclick="@(()=>changeExpend(0))" Icon="@Icons.Outlined.CreateNewFolder" Color="Color.Error">
 
         <MudNavLink Href="#" Icon="@Icons.Material.Filled.Assignment">
             Immatriculation
@@ -40,7 +39,7 @@
         </MudNavLink>
     </MudNavGroup>
 
-    <MudNavGroup Title="Mise-à-jour de titre foncier" @bind-Expanded=_isMajExpanded Icon="@Icons.Outlined.Update" Color="Color.Error">
+    <MudNavGroup Title="Mise-à-jour de titre foncier" @bind-Expanded="listeMenu[1]" onclick="@(()=>changeExpend(1))" Icon="@Icons.Outlined.Update" Color="Color.Error">
 
         <MudNavLink Href="#" Icon="@Icons.Material.Outlined.LooksTwo">
             Duplicata
@@ -58,7 +57,7 @@
     </MudNavGroup>
 
 
-    <MudNavGroup Title="Opérations diverses" @bind-Expanded=_isOtherExpanded Icon="@Icons.Outlined.DevicesOther" Color="Color.Error">
+    <MudNavGroup Title="Opérations diverses" @bind-Expanded="listeMenu[2]" onclick="@(()=>changeExpend(2))" Icon="@Icons.Outlined.DevicesOther" Color="Color.Error">
 
         <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Explore">
             Expertises foncières
@@ -81,58 +80,65 @@
         </MudNavLink>
     </MudNavGroup>
 
-    @if (_canViewUsers || _canViewRoles)
-    {
-        
-     <MudNavGroup Title=@_localizer["Administrator"] @bind-Expanded=_isAdminExpanded Icon="@Icons.Outlined.VerifiedUser" Color="Color.Error">
+    <MudNavGroup Title="Paramétrage" @bind-Expanded="listeMenu[3]" onclick="@(()=>changeExpend(3))" Icon="@Icons.Outlined.Settings" Color="Color.Error">
 
-        @if (_canViewUsers)
-        {
-            <MudNavLink Href="/identity/users" Icon="@Icons.Material.Outlined.Person">
-                @_localizer["Users"]
-            </MudNavLink>
-        }
         <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
             @_localizer["Swagger"]
         </MudNavLink>
-        @if (_canViewRoles)
-        {
-            <MudNavLink Href="/identity/roles" Icon="@Icons.Material.Outlined.Person">@_localizer["Roles"]</MudNavLink>
-        }
-        @if (_canViewAuditTrails)
-        {
-            <MudNavLink Href="/audit-trails" Icon="@Icons.Material.Outlined.Security">
-                @_localizer["Audit Trails"]
+       
+    </MudNavGroup>
+
+    @if (_canViewUsers || _canViewRoles)
+    {
+
+        <MudNavGroup Title=@_localizer["Administrator"] @bind-Expanded="listeMenu[4]" onclick="@(()=>changeExpend(4))" Icon="@Icons.Outlined.VerifiedUser" Color="Color.Error">
+
+            @if (_canViewUsers)
+            {
+                <MudNavLink Href="/identity/users" Icon="@Icons.Material.Outlined.Person">
+                    @_localizer["Users"]
+                </MudNavLink>
+            }
+            <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
+                @_localizer["Swagger"]
             </MudNavLink>
-        }
+            @if (_canViewRoles)
+            {
+                <MudNavLink Href="/identity/roles" Icon="@Icons.Material.Outlined.Person">@_localizer["Roles"]</MudNavLink>
+            }
+            @if (_canViewAuditTrails)
+            {
+                <MudNavLink Href="/audit-trails" Icon="@Icons.Material.Outlined.Security">
+                    @_localizer["Audit Trails"]
+                </MudNavLink>
+            }
         </MudNavGroup>
     }
-    
+
     @if (_canViewDocuments || _canViewDocumentTypes)
     {
 
-        <MudNavGroup Title=@_localizer["Document Management"] @bind-Expanded=_isDocExpanded Icon="@Icons.Outlined.FolderSpecial" Color="Color.Error">
+        <MudNavGroup Title=@_localizer["Document Management"] @bind-Expanded="listeMenu[5]" onclick="@(()=>changeExpend(5))" Icon="@Icons.Outlined.FolderSpecial" Color="Color.Error">
 
-        @if (_canViewDocuments)
-        {
-            <MudNavLink Href="/mydocument-store" Icon="@Icons.Material.Outlined.AttachFile">
-                @_localizer["My Document Store"]
-            </MudNavLink>
-        }
-        @if (_canViewDocumentTypes)
-        {
-            <MudNavLink Href="/document-store" Icon="@Icons.Material.Outlined.FolderOpen">
-                @_localizer["Document Store"]
-            </MudNavLink>
-            <MudNavLink Href="/document-types" Icon="@Icons.Material.Outlined.FolderShared">
-                @_localizer["Document Types"]
-            </MudNavLink>
-        }
+            @if (_canViewDocuments)
+            {
+                <MudNavLink Href="/mydocument-store" Icon="@Icons.Material.Outlined.AttachFile">
+                    @_localizer["My Document Store"]
+                </MudNavLink>
+            }
+            @if (_canViewDocumentTypes)
+            {
+                <MudNavLink Href="/document-store" Icon="@Icons.Material.Outlined.FolderOpen">
+                    @_localizer["Document Store"]
+                </MudNavLink>
+                <MudNavLink Href="/document-types" Icon="@Icons.Material.Outlined.FolderShared">
+                    @_localizer["Document Types"]
+                </MudNavLink>
+            }
         </MudNavGroup>
     }
     @if (_canViewChat)
     {
-         
         <MudNavLink Href="/chat" Icon="@Icons.Material.Outlined.Chat">
             @_localizer["Chat"]
         </MudNavLink>
@@ -153,6 +159,16 @@
     private bool _canViewProducts;
     private bool _canViewBrands;
 
+    bool _isTFExpanded = false;
+    bool _isMajExpanded = false;
+    bool _isOtherExpanded = false;
+    bool _isAdminExpanded = false;
+    bool _isParamExpanded = false;
+    bool _isDocExpanded = false;
+
+    uint nMenu = 6;
+    List<bool> listeMenu = new List<bool>();
+
     protected override async Task OnParametersSetAsync()
     {
         _authenticationStateProviderUser = await _stateProvider.GetAuthenticationStateProviderUserAsync();
@@ -165,13 +181,29 @@
         _canViewUsers = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Users.View)).Succeeded;
         _canViewChat = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Communication.Chat)).Succeeded;
     }
-}
 
-@code {
-    bool _isTFExpanded = false;
-    bool _isMajExpanded = false;
-    bool _isOtherExpanded = false;
-    bool _isAdminExpanded = false;
-    bool _isParamExpanded = false;
-    bool _isDocExpanded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        init();
+
+
+    }
+    private void init()
+    {
+        for (int i = 0; i < nMenu; i++)
+        {
+            listeMenu.Insert(i, false);
+        }
+    }
+    private void changeExpend(int i)
+    {
+        init();
+        if (i < nMenu)
+        {
+            listeMenu[i] = !listeMenu[i];           
+        }
+        StateHasChanged();
+        //return listeMenu[i];
+    }
+
 }
