@@ -1,4 +1,6 @@
-﻿using BlazorHero.CleanArchitecture.Application.Configurations;
+﻿using BlazorHero.Application.Configurations;
+using BlazorHero.Application.Interfaces.Services;
+using BlazorHero.CleanArchitecture.Application.Configurations;
 using BlazorHero.CleanArchitecture.Application.Interfaces.Serialization.Options;
 using BlazorHero.CleanArchitecture.Application.Interfaces.Serialization.Serializers;
 using BlazorHero.CleanArchitecture.Application.Interfaces.Serialization.Settings;
@@ -246,7 +248,9 @@ namespace BlazorHero.CleanArchitecture.Server.Extensions
         {
             services.AddTransient<IDateTimeService, SystemDateTimeService>();
             services.Configure<MailConfiguration>(configuration.GetSection("MailConfiguration"));
+            services.Configure<SMSConfiguration>(configuration.GetSection("SMSConfiguration"));
             services.AddTransient<IMailService, SMTPMailService>();
+            services.AddTransient<ISMSService, SMSService>();
             return services;
         }
 

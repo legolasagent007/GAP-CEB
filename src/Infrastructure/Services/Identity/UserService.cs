@@ -6,6 +6,9 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using AutoMapper;
+
+using BlazorHero.Application.Interfaces.Services;
+using BlazorHero.Application.Requests.SMS;
 using BlazorHero.CleanArchitecture.Application.Exceptions;
 using BlazorHero.CleanArchitecture.Application.Extensions;
 using BlazorHero.CleanArchitecture.Application.Interfaces.Services;
@@ -30,16 +33,19 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Services.Identity
         private readonly UserManager<BlazorHeroUser> _userManager;
         private readonly RoleManager<BlazorHeroRole> _roleManager;
         private readonly IMailService _mailService;
+        private readonly ISMSService _smsService;
         private readonly IStringLocalizer<UserService> _localizer;
         private readonly IExcelService _excelService;
         private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
-
+    
         public UserService(
             UserManager<BlazorHeroUser> userManager,
             IMapper mapper,
             RoleManager<BlazorHeroRole> roleManager,
             IMailService mailService,
+
+            ISMSService smsService,
             IStringLocalizer<UserService> localizer,
             IExcelService excelService,
             ICurrentUserService currentUserService)
@@ -48,6 +54,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Services.Identity
             _mapper = mapper;
             _roleManager = roleManager;
             _mailService = mailService;
+            _smsService = smsService;
             _localizer = localizer;
             _excelService = excelService;
             _currentUserService = currentUserService;
@@ -85,6 +92,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Services.Identity
                 {
                     return await Result.FailAsync(string.Format(_localizer["Phone number {0} is already registered."], request.PhoneNumber));
                 }
+
             }
 
             var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
@@ -103,7 +111,13 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Services.Identity
                             Body = string.Format(_localizer["Please confirm your account by <a href='{0}'>clicking here</a>."], verificationUri),
                             Subject = _localizer["Confirm Registration"]
                         };
+                        var smsRequest = new SMSRequest
+                        {
+                            To = "+228" + request.PhoneNumber,
+                            Text = $"Code de Confirmation: {Guid.NewGuid().ToString().Substring(0, 6)}"
+                        };
                         BackgroundJob.Enqueue(() => _mailService.SendAsync(mailRequest));
+                        BackgroundJob.Enqueue(() =>_smsService.SendAsync(smsRequest));
                         return await Result<string>.SuccessAsync(user.Id, string.Format(_localizer["User {0} Registered. Please check your Mailbox to verify!"], user.UserName));
                     }
                     return await Result<string>.SuccessAsync(user.Id, string.Format(_localizer["User {0} Registered."], user.UserName));
@@ -183,12 +197,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Services.Identity
         public async Task<IResult> UpdateRolesAsync(UpdateUserRolesRequest request)
         {
             var user = await _userManager.FindByIdAsync(request.UserId);
-            if (user.Email == "mukesh@blazorhero.com")
-            {
-                return await Result.FailAsync(_localizer["Not Allowed."]);
-            }
-
-            var roles = await _userManager.GetRolesAsync(user);
+                       var roles = await _userManager.GetRolesAsync(user);
             var selectedRoles = request.UserRoles.Where(x => x.Selected).ToList();
 
             var currentUser = await _userManager.FindByIdAsync(_currentUserService.UserId);
@@ -245,6 +254,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Services.Identity
                 To = request.Email
             };
             BackgroundJob.Enqueue(() => _mailService.SendAsync(mailRequest));
+           
             return await Result.SuccessAsync(_localizer["Password Reset Mail has been sent to your authorized Email."]);
         }
 
