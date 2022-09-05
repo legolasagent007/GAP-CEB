@@ -351,3 +351,4 @@ healthchecksdb
 # Configuration files
 src/Server/appsettings.json
 src/Server/appsettings.Development.json
+/.gitlab/CODEOWNERS
