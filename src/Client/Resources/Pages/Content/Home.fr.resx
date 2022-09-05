@@ -118,75 +118,72 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Blazor For Beginners – Getting Started With Blazor" xml:space="preserve">
-    <value>Blazor For Beginners – Getting Started With Blazor</value>
+    <value>Blazor pour les débutants - Démarrer avec Blazor</value>
   </data>
   <data name="Blazor Hero Description" xml:space="preserve">
     <value>Blazor Hero est un modèle de solution propre et tout en un pour Blazor Web-Assembly, construit avec la bibliothèque de composants</value>
   </data>
   <data name="Building A Chat Application With Blazor, Identity, And SignalR" xml:space="preserve">
-    <value>Building A Chat Application With Blazor, Identity, And SignalR</value>
-  </data>
-  <data name="Celebrating 1,500 Stars on Github!" xml:space="preserve">
-    <value>Celebrating 1,500 Stars on Github!</value>
+    <value>Création d'une application de chat avec Blazor, Identity et SignalR</value>
   </data>
   <data name="Component Library" xml:space="preserve">
     <value />
   </data>
   <data name="Custom Authentication In Blazor WebAssembly – Detailed" xml:space="preserve">
-    <value>Custom Authentication In Blazor WebAssembly – Detailed</value>
+    <value>Authentification personnalisée dans Blazor WebAssembly - détaillé</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Application de gestion des processus de la DCCFE</value>
+    <value>Projet Model de l'OTR</value>
   </data>
   <data name="Documentation - Coming Soon" xml:space="preserve">
-    <value>Documentation - Coming Soon</value>
+    <value>Documentation - Bientôt disponible</value>
   </data>
   <data name="Exploring Blazor Project Structure" xml:space="preserve">
-    <value>Exploring Blazor Project Structure</value>
+    <value>Explorer la structure du projet Blazor</value>
   </data>
   <data name="Getting Started" xml:space="preserve">
-    <value>Getting Started</value>
+    <value>Pour commencer</value>
   </data>
   <data name="Github Repository : Do Not Forget to Leave a Star ;)" xml:space="preserve">
     <value>Github Repository : Do Not Forget to Leave a Star ;)</value>
   </data>
   <data name="Here are few articles that should help you get started with Blazor." xml:space="preserve">
-    <value>Here are few articles that should help you get started with Blazor.</value>
+    <value>Voici quelques articles qui devraient vous aider à démarrer avec Blazor.</value>
   </data>
   <data name="How To Implement Blazor CRUD Using Entity Framework Core?" xml:space="preserve">
-    <value>How To Implement Blazor CRUD Using Entity Framework Core?</value>
+    <value>Comment implémenter Blazor CRUD en utilisant Entity Framework Core ?</value>
   </data>
   <data name="Implementing Blazor CRUD Using Mudblazor Component Library In .NET 5" xml:space="preserve">
-    <value>Implementing Blazor CRUD Using Mudblazor Component Library In .NET 5</value>
+    <value>Mise en œuvre de Blazor CRUD à l'aide de la bibliothèque de composants Mudblazor en .NET 6</value>
   </data>
   <data name="Important Links" xml:space="preserve">
     <value>Important Links</value>
   </data>
   <data name="In case you are stuck anywhere or have any queries regarding this implementation, I have compiled a Quick Start Guide for you reference." xml:space="preserve">
-    <value>In case you are stuck anywhere or have any queries regarding this implementation, I have compiled a Quick Start Guide for you reference.</value>
+    <value>Au cas où vous seriez bloqué ou auriez des questions concernant cette mise en œuvre, j'ai compilé un guide de démarrage rapide pour vous servir de référence.</value>
   </data>
   <data name="Learning Resources" xml:space="preserve">
-    <value>Learning Resources</value>
+    <value>Ressources d'apprentissage</value>
   </data>
   <data name="Liked BlazorHero? Star us on Github!" xml:space="preserve">
-    <value>Liked BlazorHero? Star us on Github!</value>
+    <value>OTRBLAZOR est un fork du projet Open source BlazorHero sur Github!</value>
   </data>
   <data name="Onion Architecture In ASP.NET Core With CQRS – Detailed" xml:space="preserve">
-    <value>Onion Architecture In ASP.NET Core With CQRS – Detailed</value>
+    <value>Architecture en oignon dans ASP.NET Core avec CQRS - détaillée</value>
   </data>
   <data name="Project Page" xml:space="preserve">
     <value>Project Page</value>
   </data>
   <data name="Quick Start Guide" xml:space="preserve">
-    <value>Quick Start Guide</value>
+    <value>Guide de démarrage rapide</value>
   </data>
   <data name="Read The Guide" xml:space="preserve">
-    <value>Read The Guide</value>
+    <value>Lire le guide</value>
   </data>
   <data name="Support Me" xml:space="preserve">
     <value>Support Me!</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>DCCFE</value>
+    <value>FRAMEWORK OTRBLAZOR </value>
   </data>
 </root>

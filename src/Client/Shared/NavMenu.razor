@@ -5,75 +5,69 @@
 <MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.Home">@_localizer["Home"]</MudNavLink>
 
-
-    @*<MudListSubheader Class="mt-2 mb-n2">@_localizer["Personal"]</MudListSubheader>*@
     @if (_canViewDashboards)
     {
-
+        
         <MudNavLink Href="/dashboard" Icon="@Icons.Material.Outlined.Dashboard">
             @_localizer["Dashboard"]
         </MudNavLink>
-        <MudNavLink Href="/dashboard" Icon="@Icons.Material.Outlined.Folder">
-            @_localizer["Dépôt"]
+        <MudNavLink Href="/Dossier" Icon="@Icons.Material.Outlined.Folder">
+            @_localizer["Dossier"]
         </MudNavLink>
-        <MudNavLink Href="/dashboard" Icon="@Icons.Material.Outlined.Map">
-            @_localizer["Plan parcellaire"]
-        </MudNavLink>
+        
     }
     
 
-    <MudNavGroup Title="Création de titre foncier" @bind-Expanded="listeMenu[0]" onclick="@(()=>changeExpend(0))" Icon="@Icons.Outlined.CreateNewFolder" Color="Color.Error">
+    <MudNavGroup Title="Menu Deroulant" @bind-Expanded="listeMenu[0]" onclick="@(()=>changeExpend(0))" Icon="@Icons.Outlined.CreateNewFolder" Color="Color.Error">
 
-        <MudNavLink Href="#" Icon="@Icons.Material.Filled.Assignment">
-            Immatriculation
+        <MudNavLink Href="#M11" Icon="@Icons.Material.Filled.Assignment">
+            Sous Menu 1
         </MudNavLink>
 
-        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.VerticalSplit">
-            Morcellement / Démembrement
+        <MudNavLink Href="#M12" Icon="@Icons.Material.Outlined.VerticalSplit">
+            Sous Menu 2
         </MudNavLink>
-        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.MergeType">
-            Fusion
+       
+    </MudNavGroup>
+
+    <MudNavGroup Title="Menu Deroulant 2" @bind-Expanded="listeMenu[1]" onclick="@(()=>changeExpend(1))" Icon="@Icons.Outlined.Update" Color="Color.Error">
+
+        <MudNavLink Href="#M21" Icon="@Icons.Material.Outlined.LooksTwo">
+            Sous-Menu 1
+        </MudNavLink>
+
+        <MudNavLink Href="#M22" Icon="@Icons.Material.Outlined.Refresh">
+            Sous-Menu 2
+        </MudNavLink>
+        <MudNavLink Href="#23" Icon="@Icons.Material.Outlined.RestoreFromTrash">
+            Sous-Menu 3
+        </MudNavLink>
+        <MudNavLink Href="#24" Icon="@Icons.Material.Outlined.DevicesOther">
+           Sous-Menu 4
         </MudNavLink>
     </MudNavGroup>
 
-    <MudNavGroup Title="Mise-à-jour de titre foncier" @bind-Expanded="listeMenu[1]" onclick="@(()=>changeExpend(1))" Icon="@Icons.Outlined.Update" Color="Color.Error">
 
-        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.LooksTwo">
-            Duplicata
-        </MudNavLink>
+    <MudNavGroup Title="Menu Deroulant 3" @bind-Expanded="listeMenu[2]" onclick="@(()=>changeExpend(2))" Icon="@Icons.Outlined.DevicesOther" Color="Color.Error">
 
-        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Refresh">
-            Actualisation
-        </MudNavLink>
-        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.RestoreFromTrash">
-            Rectification
-        </MudNavLink>
-        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.DevicesOther">
-            Autres opérations post-immatriculation
-        </MudNavLink>
-    </MudNavGroup>
-
-
-    <MudNavGroup Title="Opérations diverses" @bind-Expanded="listeMenu[2]" onclick="@(()=>changeExpend(2))" Icon="@Icons.Outlined.DevicesOther" Color="Color.Error">
-
-        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Explore">
-            Expertises foncières
+        <MudNavLink Href="#31" Icon="@Icons.Material.Outlined.Explore">
+            Sous menu 1
         </MudNavLink>
 
-        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.CardGiftcard">
-            Plan cadastral
+        <MudNavLink Href="#32" Icon="@Icons.Material.Outlined.CardGiftcard">
+            Sous menu 2
         </MudNavLink>
-        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Info">
-            Renseignements
+        <MudNavLink Href="#33" Icon="@Icons.Material.Outlined.Info">
+            Sous menu 3
         </MudNavLink>
-        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Anchor">
-            Opposition
+        <MudNavLink Href="#34" Icon="@Icons.Material.Outlined.Anchor">
+            Sous menu 4
         </MudNavLink>
-        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Analytics">
-            Evaluation cadastrale
+        <MudNavLink Href="#35" Icon="@Icons.Material.Outlined.Analytics">
+            Sous menu 5
         </MudNavLink>
-        <MudNavLink Href="#" Icon="@Icons.Material.Outlined.RuleFolder">
-            Récapitulatifs de dossiers
+        <MudNavLink Href="#36" Icon="@Icons.Material.Outlined.RuleFolder">
+            Sous menu 6
         </MudNavLink>
     </MudNavGroup>
 
