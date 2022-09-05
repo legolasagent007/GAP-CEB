@@ -47,6 +47,8 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using BlazorHero.Application.Interfaces.Services;
+using BlazorHero.Infrastructure.Services;
 
 namespace BlazorHero.CleanArchitecture.Server.Extensions
 {
@@ -364,6 +366,12 @@ namespace BlazorHero.CleanArchitecture.Server.Extensions
                     }
                 }
             });
+            return services;
+        }
+
+        internal static IServiceCollection AddIntegrationServices(this IServiceCollection services)
+        {
+            services.AddTransient<ISgioService, SgioService>();
             return services;
         }
     }
