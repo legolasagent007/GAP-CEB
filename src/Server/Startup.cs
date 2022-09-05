@@ -54,6 +54,7 @@ namespace BlazorHero.CleanArchitecture.Server
             services.AddInfrastructureMappings();
             services.AddHangfire(x => x.UseSqlServerStorage(_configuration.GetConnectionString("DefaultConnection")));
             services.AddHangfireServer();
+            services.AddIntegrationServices();
             services.AddControllers().AddValidators();
             services.AddExtendedAttributesValidators();
             services.AddExtendedAttributesHandlers();
