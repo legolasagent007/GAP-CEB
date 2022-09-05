@@ -4,87 +4,135 @@
 <UserCard />
 <MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.Home">@_localizer["Home"]</MudNavLink>
-    @if (_canViewHangfire)
-    {
-        <MudNavLink Href="/jobs" Target="_blank" Icon="@Icons.Material.Outlined.Work">
-            @_localizer["Hangfire"]
-        </MudNavLink>
-    }
-    <MudNavLink Href="https://codewithmukesh.com/blog/blazor-hero-quick-start-guide/" Target="_blank" Icon="@Icons.Material.Outlined.ReadMore">
-        @_localizer["Quick Start Guide"]
-    </MudNavLink>
-    <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
-        @_localizer["Swagger"]
-    </MudNavLink>
-    <MudListSubheader Class="mt-2 mb-n2">@_localizer["Personal"]</MudListSubheader>
+
     @if (_canViewDashboards)
     {
+        
         <MudNavLink Href="/dashboard" Icon="@Icons.Material.Outlined.Dashboard">
             @_localizer["Dashboard"]
         </MudNavLink>
-    }
-    <MudNavLink Href="/account" Icon="@Icons.Material.Outlined.SupervisorAccount">
-        @_localizer["Account"]
-    </MudNavLink>
-    @if (_canViewAuditTrails)
-    {
-        <MudNavLink Href="/audit-trails" Icon="@Icons.Material.Outlined.Security">
-            @_localizer["Audit Trails"]
+        <MudNavLink Href="/Dossier" Icon="@Icons.Material.Outlined.Folder">
+            @_localizer["Dossier"]
         </MudNavLink>
+        
     }
-    @if (_canViewDocuments || _canViewDocumentTypes)
-    {
-        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Document Management"]</MudListSubheader>
-        @if (_canViewDocuments)
-        {
-            <MudNavLink Href="/document-store" Icon="@Icons.Material.Outlined.AttachFile">
-                @_localizer["Document Store"]
-            </MudNavLink>
-        }
-        @if (_canViewDocumentTypes)
-        {
-            <MudNavLink Href="/document-types" Icon="@Icons.Material.Outlined.FileCopy">
-                @_localizer["Document Types"]
-            </MudNavLink>
-        }
-    }
+    
+
+    <MudNavGroup Title="Menu Deroulant" @bind-Expanded="listeMenu[0]" onclick="@(()=>changeExpend(0))" Icon="@Icons.Outlined.CreateNewFolder" Color="Color.Error">
+
+        <MudNavLink Href="#M11" Icon="@Icons.Material.Filled.Assignment">
+            Sous Menu 1
+        </MudNavLink>
+
+        <MudNavLink Href="#M12" Icon="@Icons.Material.Outlined.VerticalSplit">
+            Sous Menu 2
+        </MudNavLink>
+       
+    </MudNavGroup>
+
+    <MudNavGroup Title="Menu Deroulant 2" @bind-Expanded="listeMenu[1]" onclick="@(()=>changeExpend(1))" Icon="@Icons.Outlined.Update" Color="Color.Error">
+
+        <MudNavLink Href="#M21" Icon="@Icons.Material.Outlined.LooksTwo">
+            Sous-Menu 1
+        </MudNavLink>
+
+        <MudNavLink Href="#M22" Icon="@Icons.Material.Outlined.Refresh">
+            Sous-Menu 2
+        </MudNavLink>
+        <MudNavLink Href="#23" Icon="@Icons.Material.Outlined.RestoreFromTrash">
+            Sous-Menu 3
+        </MudNavLink>
+        <MudNavLink Href="#24" Icon="@Icons.Material.Outlined.DevicesOther">
+           Sous-Menu 4
+        </MudNavLink>
+    </MudNavGroup>
+
+
+    <MudNavGroup Title="Menu Deroulant 3" @bind-Expanded="listeMenu[2]" onclick="@(()=>changeExpend(2))" Icon="@Icons.Outlined.DevicesOther" Color="Color.Error">
+
+        <MudNavLink Href="#31" Icon="@Icons.Material.Outlined.Explore">
+            Sous menu 1
+        </MudNavLink>
+
+        <MudNavLink Href="#32" Icon="@Icons.Material.Outlined.CardGiftcard">
+            Sous menu 2
+        </MudNavLink>
+        <MudNavLink Href="#33" Icon="@Icons.Material.Outlined.Info">
+            Sous menu 3
+        </MudNavLink>
+        <MudNavLink Href="#34" Icon="@Icons.Material.Outlined.Anchor">
+            Sous menu 4
+        </MudNavLink>
+        <MudNavLink Href="#35" Icon="@Icons.Material.Outlined.Analytics">
+            Sous menu 5
+        </MudNavLink>
+        <MudNavLink Href="#36" Icon="@Icons.Material.Outlined.RuleFolder">
+            Sous menu 6
+        </MudNavLink>
+    </MudNavGroup>
+
+    <MudNavGroup Title="Paramétrage" @bind-Expanded="listeMenu[3]" onclick="@(()=>changeExpend(3))" Icon="@Icons.Outlined.Settings" Color="Color.Error">
+
+        <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
+            @_localizer["Swagger"]
+        </MudNavLink>
+       
+    </MudNavGroup>
 
     @if (_canViewUsers || _canViewRoles)
     {
-        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Administrator"]</MudListSubheader>
-        @if (_canViewUsers)
-        {
-            <MudNavLink Href="/identity/users" Icon="@Icons.Material.Outlined.Person">
-                @_localizer["Users"]
+
+        <MudNavGroup Title=@_localizer["Administrator"] @bind-Expanded="listeMenu[4]" onclick="@(()=>changeExpend(4))" Icon="@Icons.Outlined.VerifiedUser" Color="Color.Error">
+
+            @if (_canViewUsers)
+            {
+                <MudNavLink Href="/identity/users" Icon="@Icons.Material.Outlined.Person">
+                    @_localizer["Users"]
+                </MudNavLink>
+            }
+            <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
+                @_localizer["Swagger"]
             </MudNavLink>
-        }
-        @if (_canViewRoles)
-        {
-            <MudNavLink Href="/identity/roles" Icon="@Icons.Material.Outlined.Person">@_localizer["Roles"]</MudNavLink>
-        }
+            @if (_canViewRoles)
+            {
+                <MudNavLink Href="/identity/roles" Icon="@Icons.Material.Outlined.Person">@_localizer["Roles"]</MudNavLink>
+            }
+            @if (_canViewAuditTrails)
+            {
+                <MudNavLink Href="/audit-trails" Icon="@Icons.Material.Outlined.Security">
+                    @_localizer["Audit Trails"]
+                </MudNavLink>
+            }
+        </MudNavGroup>
+    }
+
+    @if (_canViewDocuments || _canViewDocumentTypes)
+    {
+
+        <MudNavGroup Title=@_localizer["Document Management"] @bind-Expanded="listeMenu[5]" onclick="@(()=>changeExpend(5))" Icon="@Icons.Outlined.FolderSpecial" Color="Color.Error">
+
+            @if (_canViewDocuments)
+            {
+                <MudNavLink Href="/mydocument-store" Icon="@Icons.Material.Outlined.AttachFile">
+                    @_localizer["My Document Store"]
+                </MudNavLink>
+            }
+            @if (_canViewDocumentTypes)
+            {
+                <MudNavLink Href="/document-store" Icon="@Icons.Material.Outlined.FolderOpen">
+                    @_localizer["Document Store"]
+                </MudNavLink>
+                <MudNavLink Href="/document-types" Icon="@Icons.Material.Outlined.FolderShared">
+                    @_localizer["Document Types"]
+                </MudNavLink>
+            }
+        </MudNavGroup>
     }
     @if (_canViewChat)
     {
-        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Communication"]</MudListSubheader>
         <MudNavLink Href="/chat" Icon="@Icons.Material.Outlined.Chat">
             @_localizer["Chat"]
         </MudNavLink>
-    }
-    @if (_canViewProducts || _canViewBrands)
-    {
-        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Catalog Management"]</MudListSubheader>
-        @if (_canViewProducts)
-        {
-            <MudNavLink Href="/catalog/products" Icon="@Icons.Material.Outlined.CallToAction">
-                @_localizer["Products"]
-            </MudNavLink>
-        }
-        @if (_canViewBrands)
-        {
-            <MudNavLink Href="/catalog/brands" Icon="@Icons.Material.Outlined.CallToAction">
-                @_localizer["Brands"]
-            </MudNavLink>
-        }
     }
 </MudNavMenu>
 
@@ -102,6 +150,9 @@
     private bool _canViewProducts;
     private bool _canViewBrands;
 
+
+    List<bool> listeMenu = new List<bool>{false,false,false,false,false,false};
+
     protected override async Task OnParametersSetAsync()
     {
         _authenticationStateProviderUser = await _stateProvider.GetAuthenticationStateProviderUserAsync();
@@ -113,7 +164,18 @@
         _canViewRoles = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Roles.View)).Succeeded;
         _canViewUsers = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Users.View)).Succeeded;
         _canViewChat = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Communication.Chat)).Succeeded;
-        _canViewProducts = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Products.View)).Succeeded;
-        _canViewBrands = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Brands.View)).Succeeded;
+    }   
+    
+    private void changeExpend(int i)
+    {
+        for(int k=0; k < listeMenu.Count; k++)
+        {
+            if(k!=i && listeMenu[k] == true)
+            {
+                listeMenu[k] = false;
+            }
+        }
+       
     }
+
 }

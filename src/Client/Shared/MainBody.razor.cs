@@ -28,7 +28,7 @@ namespace BlazorHero.CleanArchitecture.Client.Shared
 
         private string CurrentUserId { get; set; }
         private string ImageDataUrl { get; set; }
-        private string FirstName { get; set; }
+        private string FirstName { get; set; } = String.Empty;
         private string SecondName { get; set; }
         private string Email { get; set; }
         private char FirstLetterOfName { get; set; }
@@ -52,77 +52,87 @@ namespace BlazorHero.CleanArchitecture.Client.Shared
             _rightToLeft = await _clientPreferenceManager.IsRTL();
             _interceptor.RegisterEvent();
             hubConnection = hubConnection.TryInitialize(_navigationManager, _localStorage);
-            await hubConnection.StartAsync();
-            hubConnection.On<string, string, string>(ApplicationConstants.SignalR.ReceiveChatNotification, (message, receiverUserId, senderUserId) =>
+            try
             {
-                if (CurrentUserId == receiverUserId)
+                await hubConnection.StartAsync();
+                hubConnection.On<string, string, string>(ApplicationConstants.SignalR.ReceiveChatNotification, (message, receiverUserId, senderUserId) =>
                 {
-                    _jsRuntime.InvokeAsync<string>("PlayAudio", "notification");
-                    _snackBar.Add(message, Severity.Info, config =>
+                    if (CurrentUserId == receiverUserId)
                     {
-                        config.VisibleStateDuration = 10000;
-                        config.HideTransitionDuration = 500;
-                        config.ShowTransitionDuration = 500;
-                        config.Action = _localizer["Chat?"];
-                        config.ActionColor = Color.Primary;
-                        config.Onclick = snackbar =>
+                        _jsRuntime.InvokeAsync<string>("PlayAudio", "notification");
+                        _snackBar.Add(message, Severity.Info, config =>
                         {
-                            _navigationManager.NavigateTo($"chat/{senderUserId}");
-                            return Task.CompletedTask;
-                        };
-                    });
-                }
-            });
-            hubConnection.On(ApplicationConstants.SignalR.ReceiveRegenerateTokens, async () =>
-            {
-                try
-                {
-                    var token = await _authenticationManager.TryForceRefreshToken();
-                    if (!string.IsNullOrEmpty(token))
-                    {
-                        _snackBar.Add(_localizer["Refreshed Token."], Severity.Success);
-                        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    _snackBar.Add(_localizer["You are Logged Out."], Severity.Error);
-                    await _authenticationManager.Logout();
-                    _navigationManager.NavigateTo("/");
-                }
-            });
-            hubConnection.On<string, string>(ApplicationConstants.SignalR.LogoutUsersByRole, async (userId, roleId) =>
-            {
-                if (CurrentUserId != userId)
-                {
-                    var rolesResponse = await RoleManager.GetRolesAsync();
-                    if (rolesResponse.Succeeded)
-                    {
-                        var role = rolesResponse.Data.FirstOrDefault(x => x.Id == roleId);
-                        if (role != null)
-                        {
-                            var currentUserRolesResponse = await _userManager.GetRolesAsync(CurrentUserId);
-                            if (currentUserRolesResponse.Succeeded && currentUserRolesResponse.Data.UserRoles.Any(x => x.RoleName == role.Name))
+                            config.VisibleStateDuration = 10000;
+                            config.HideTransitionDuration = 500;
+                            config.ShowTransitionDuration = 500;
+                            config.Action = _localizer["Chat?"];
+                            config.ActionColor = Color.Primary;
+                            config.Onclick = snackbar =>
                             {
-                                _snackBar.Add(_localizer["You are logged out because the Permissions of one of your Roles have been updated."], Severity.Error);
-                                await hubConnection.SendAsync(ApplicationConstants.SignalR.OnDisconnect, CurrentUserId);
-                                await _authenticationManager.Logout();
-                                _navigationManager.NavigateTo("/login");
+                                _navigationManager.NavigateTo($"chat/{senderUserId}");
+                                return Task.CompletedTask;
+                            };
+                        });
+                    }
+                });
+                hubConnection.On(ApplicationConstants.SignalR.ReceiveRegenerateTokens, async () =>
+                {
+                    try
+                    {
+                        var token = await _authenticationManager.TryForceRefreshToken();
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            _snackBar.Add(_localizer["Refreshed Token."], Severity.Success);
+                            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        _snackBar.Add(_localizer["You are Logged Out."], Severity.Error);
+                        await _authenticationManager.Logout();
+                        _navigationManager.NavigateTo("/");
+                    }
+                });
+                hubConnection.On<string, string>(ApplicationConstants.SignalR.LogoutUsersByRole, async (userId, roleId) =>
+                {
+                    if (CurrentUserId != userId)
+                    {
+                        var rolesResponse = await RoleManager.GetRolesAsync();
+                        if (rolesResponse.Succeeded)
+                        {
+                            var role = rolesResponse.Data.FirstOrDefault(x => x.Id == roleId);
+                            if (role != null)
+                            {
+                                var currentUserRolesResponse = await _userManager.GetRolesAsync(CurrentUserId);
+                                if (currentUserRolesResponse.Succeeded && currentUserRolesResponse.Data.UserRoles.Any(x => x.RoleName == role.Name))
+                                {
+                                    _snackBar.Add(_localizer["You are logged out because the Permissions of one of your Roles have been updated."], Severity.Error);
+                                    await hubConnection.SendAsync(ApplicationConstants.SignalR.OnDisconnect, CurrentUserId);
+                                    await _authenticationManager.Logout();
+                                    _navigationManager.NavigateTo("/login");
+                                }
                             }
                         }
                     }
-                }
-            });
-            hubConnection.On<string>(ApplicationConstants.SignalR.PingRequest, async (userName) =>
+                });
+                hubConnection.On<string>(ApplicationConstants.SignalR.PingRequest, async (userName) =>
+                {
+                    await hubConnection.SendAsync(ApplicationConstants.SignalR.PingResponse, CurrentUserId, userName);
+
+                });
+
+                await hubConnection.SendAsync(ApplicationConstants.SignalR.OnConnect, CurrentUserId);
+            }catch(Exception e)
             {
-                await hubConnection.SendAsync(ApplicationConstants.SignalR.PingResponse, CurrentUserId, userName);
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                if(FirstName.Length>0)
+                _snackBar.Add(string.Format(_localizer["Welcome {0}"], FirstName), Severity.Success);
 
-            });
-
-            await hubConnection.SendAsync(ApplicationConstants.SignalR.OnConnect, CurrentUserId);
-
-            _snackBar.Add(string.Format(_localizer["Welcome {0}"], FirstName), Severity.Success);
+            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
