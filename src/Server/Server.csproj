@@ -24,13 +24,6 @@
     <Content Remove="appsettings.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\net6.0\appsettings.Development.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.6" />
     <PackageReference Include="Hangfire" Version="1.7.28" />
     <PackageReference Include="LazyCache.AspNetCore" Version="2.4.0" />
@@ -69,8 +62,14 @@
     <Folder Include="Files\Images\ProfilePictures\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="appsettings.json" />
-    <None Include="bin\Debug\net6.0\appsettings.json" />
+    <None Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Update="Files\Images\Products\demo.jpg">
